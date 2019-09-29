@@ -1,0 +1,35 @@
+---
+- hosts: all
+  tasks:
+    - name: create empty file 
+      file:
+        dest: /tmp/file
+        state: touch
+      tags: 
+        - create_file
+- hosts: all:!db
+  tasks:
+    - name: delete file on web
+      file: 
+        dest: /tmp/file
+        state: absent
+      tags:
+        - delete_file  
+- hosts: db
+  tasks:
+    - name: delete file on db
+      file:
+        dest: /tmp/file
+        state: absent
+      tags:
+        - delete_file
+- hosts: backup
+  tags:
+   - create_file_here
+  tasks:
+    - name: create file only on backup 
+      file: 
+        dest: /tmp/file
+        state: touch
+
+   

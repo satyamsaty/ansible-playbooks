@@ -1,11 +1,15 @@
 ---
 - hosts: all
+  tags:
+    - create_file 
   tasks:
     - name: create a empty file
       file:
         dest: /tmp/file
         state: '{{ file_state }}'
 - hosts: web
+  tags:
+    - delete_file
   tasks:
     - name: create a empty file
       file:
@@ -17,28 +21,38 @@
       file:
         dest: /tmp/web-not-db-file
         state: '{{ file_state }}'
+      tags:
+        - delete_file
 - hosts: all:&backup:!web
+  tags:
+    - delete_file
   tasks:
     - name: create an empty file on backup 
       file:
         dest: /tmp/all-but-not-web&backup
-        state: '{{ file_state1 }}'
+        state: '{{ file_state }}'
 - hosts: backup
+  tags:
+   - delete_file
   tasks:
     - name: create an empty file on backup 
       file:
         dest: /tmp/only-on-backup
-        state: '{{ file_state2 }}'
+        state: '{{ file_state }}'
 - hosts: all:!web:!backup
+  tags:
+    - delete_file
   tasks:
     - name: create empty file on slave3
       file:
         dest: /tmp/only-on-slave3
-        state: '{{ file_state3 }}'
+        state: '{{ file_state }}'
 # | doesnot work & selects the particular
 - hosts: all:|web:|db
+  tags:
+    - delete_file
   tasks:
     - name: create empty file on either
       file:
         dest: /tmp/either-file
-        state: '{{ file_state4 }}'
+        state: '{{ file_state }}'
