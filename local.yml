@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  tags:
+    - create_file
+  tasks:
+    - name: create a file via ssh connection
+      file:
+       dest: /tmp/ssh-created 
+       state: touch
+- hosts: localhost
+  tags:
+   - create_filee
+  connection: local
+  tasks:
+    - name: create a file via direct local connection
+      file:
+        dest: /tmp/direct-created
+        state: touch
+ 
