@@ -1,0 +1,26 @@
+---
+- hosts: all
+  become: true
+#  become_user: satyam 
+  vars: 
+    packages: [git,vim,ruby]
+  tasks:
+    - name: install package on centos
+      yum:
+       name: '{{item}}'
+       state: '{{pkg_state}}'
+      with_items: '{{packages}}'
+#      when: ansible_os_family == "CentOS"
+
+
+    - name: install pacakges for Redhat style OSs
+      yum:
+        name: '{{item}}'
+        state: '{{pkg_state}}'
+      with_items: '{{packages}}'
+      when: ansible_os_family == "RedHat"
+      tags:
+        - delete 
+    
+    
+
