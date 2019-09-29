@@ -6,7 +6,7 @@
     - name: create a file via ssh connection
       file:
        dest: /tmp/ssh-created 
-       state: touch
+       state: '{{ file_state }}'
 - hosts: localhost
   tags:
    - create_filee
@@ -15,5 +15,5 @@
     - name: create a file via direct local connection
       file:
         dest: /tmp/direct-created
-        state: touch
+        state: '{{ file_state }}'
  
