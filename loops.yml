@@ -1,7 +1,8 @@
 ---
 - hosts: all
+  tags:
+    - create
   become: true
-#  become_user: satyam 
   vars: 
     packages: [git,vim,ruby]
   tasks:
@@ -10,17 +11,16 @@
        name: '{{item}}'
        state: '{{pkg_state}}'
       with_items: '{{packages}}'
-#      when: ansible_os_family == "CentOS"
+      when: ansible_os_family == "RedHat"
 
 
-    - name: install pacakges for Redhat style OSs
-      yum:
-        name: '{{item}}'
-        state: '{{pkg_state}}'
+    - name: create files based on package names
+      file:
+        dest: /tmp/{{item}}
+        state: '{{file_state}}'
       with_items: '{{packages}}'
       when: ansible_os_family == "RedHat"
       tags:
-        - delete 
-    
+        - create_file 
     
 
