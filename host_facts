@@ -1,0 +1,13 @@
+---
+- hosts: web
+  tasks:
+   - name: create
+     file:
+       dest: /tmp/web2onweb1
+       state: '{{ file_state }}'
+     when: hostvars[inventory_hostname]['inventory_hostname'] == 'ansible-slave1'
+   - name: create 
+     file:
+       dest: /tmp/web1onweb2
+       state: '{{file_state}}'
+     when: inventory_hostname == 'ansible-slave2'

@@ -1,0 +1,26 @@
+---
+- hosts: all
+  tags:
+    - create
+  become: true
+  vars: 
+    packages: [git,vim,ruby]
+  tasks:
+    - name: install package on centos
+      yum:
+       name: '{{item}}'
+       state: '{{pkg_state}}'
+      with_items: '{{packages}}'
+      when: ansible_os_family == "RedHat"
+
+
+    - name: create files based on package names
+      file:
+        dest: /tmp/{{item}}
+        state: '{{file_state}}'
+      with_items: '{{packages}}'
+      when: ansible_os_family == "RedHat"
+      tags:
+        - create_file 
+    
+

@@ -1,0 +1,34 @@
+---
+- hosts: all
+  tags:
+    - create_file_all
+  tasks:
+    - name : creating file on all
+      file:
+       dest: '{{ all_file}}'
+       state: '{{ state_file }}'
+- hosts: backup 
+  tasks:
+    - name: create file on backup    
+      file:
+        dest: '{{ backup_file }}' 
+        state: '{{ state_file }}'
+      tags:
+        - create_file_backup
+- hosts: web
+  tasks:
+    - name: create file on backup
+      file:
+        dest: '{{ web_file }}'
+        state: '{{ state_file }}'
+      tags:
+        - create_file_web
+- hosts: db
+  tags:
+   - create_file_db
+  tasks:
+    - name: create file on db
+      file:
+       dest: '{{ db_file }}'
+       state: '{{ state_file }}'
+      when: db_file is defined
