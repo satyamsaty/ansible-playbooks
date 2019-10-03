@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+    - name: download
+      get_url:
+        dest: /home/ansible/transaction_list
+        url: http://apps.l33t.com/transaction_list
+    - debug: msg="File downloaded" 
+
