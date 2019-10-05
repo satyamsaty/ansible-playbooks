@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+  tasks:
+     - include_role:
+         name: create_user
+       vars:
+         user_name: robert
