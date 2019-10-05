@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  ignore_errors: true
+  gather_facts: true
+  tasks:
+    - name: to know hosts and flavor  
+      template:
+        src:  /home/ansible/playbooks/ansible-playbooks/template.j2
+        dest: /home/ansible/playbooks/ansible-playbooks/template.txt  
