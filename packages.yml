@@ -1,0 +1,22 @@
+---
+  - name: 'Install required packages'
+    hosts: localhost
+    vars:
+      packages:
+        - httpd
+        - binutils
+        - glibc
+        - ksh
+        - libaio
+        - libXext
+        - gcc
+        - make
+        - sysstat
+        - unixODBC
+        - mongodb
+        - nodejs
+        - grunt
+    tasks:
+        -
+            yum: 'name={{ item }} state=absent'
+            loop: "{{ packages }}"
